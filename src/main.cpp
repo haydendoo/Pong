@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "RenderWindow.hpp"
+#include "Entity.hpp"
 
 int main(int agrv, char *args[]) {
     if(SDL_Init(SDL_INIT_VIDEO) > 0) 
