@@ -8,18 +8,18 @@ Entity::Entity(Vector2f p_pos, SDL_Texture *p_tex)
 : pos(p_pos), tex(p_tex) {
     currentFrame.x = 0;
     currentFrame.y = 0;
-    currentFrame.w = 32;
-    currentFrame.h = 32;
+    currentFrame.w = 64;
+    currentFrame.h = 64;
 } 
 
-inline Vector2f Entity::getPos() {
+Vector2f& Entity::getPos() {
     return pos;
 }
 
-inline SDL_Texture* Entity::getTex() {
+SDL_Texture* Entity::getTex() {
     return tex;
 }
 
-inline SDL_Rect Entity::getCurrentFrame() {
+SDL_Rect Entity::getCurrentFrame() {
     return currentFrame;
 }

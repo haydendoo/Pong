@@ -1,12 +1,12 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SLD_image.h>
+#include <SDL2/SDL_image.h>
 #include <iostream>
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include "Utils.hpp"
 
-int main(int agrv, char *args[]) {
+int main(int argv, char *args[]) {
     if(SDL_Init(SDL_INIT_VIDEO) > 0) 
         std::cout << "SDL_Init HAS FAILED. Error: " << SDL_GetError() << std::endl;
 
@@ -18,7 +18,7 @@ int main(int agrv, char *args[]) {
 
     bool gameRunning = true;
 
-    SDL_Texture *grass_texture = window.loadTexture("res/gfx/grass.png");
+    SDL_Texture *grass_texture = window.loadTexture("res/gfx/grass_texture.jpg");
     Entity entities[3] = { Entity(Vector2f(0,0), grass_texture),
                            Entity(Vector2f(0,30), grass_texture),
                            Entity(Vector2f(30,30), grass_texture) };

@@ -9,11 +9,11 @@
 class RenderWindow {
 public:
     RenderWindow(const char *p_title, int p_w, int p_h);
-    inline SDL_Texture* loadTexture(const char *p_filePath);
-    inline void cleanUp();
-    inline void clear();
-    inline void render(Entity &p_entity);
-    inline void display();
+    SDL_Texture* loadTexture(const char *p_filePath);
+    void cleanUp();
+    void clear();
+    void render(Entity &p_entity);
+    void display();
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;
