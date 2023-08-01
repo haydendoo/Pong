@@ -13,7 +13,7 @@ RenderWindow::RenderWindow(const char *p_title, int p_w, int p_h)
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 }
 
-SDL_Texture* loadTexture(const char *p_filePath) {
+inline SDL_Texture* loadTexture(const char *p_filePath) {
     SDL_Texture *texture = NULL;
     texture = IMG_LoadTexture(renderer, p_filePath);
     
@@ -23,6 +23,18 @@ SDL_Texture* loadTexture(const char *p_filePath) {
     return texture;
 }
 
-void RenderWindow::cleanUp() {
+inline void RenderWindow::cleanUp() {
     SDL_DestroyWindow(window);
+}
+
+inline void RenderWindow::clear() {
+    SDL_RenderClear(renderer);
+}
+
+inline void RenderWindow::render(SDL_Texture *p_tex) {
+    SDL_RenderCopy(renderer, p_tex, NULL, NULL);
+}
+
+inline void RenderWindow::display() {
+    SDL_RenderPresent(renderer);
 }
