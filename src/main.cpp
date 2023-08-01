@@ -4,6 +4,7 @@
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
+#include "Utils.hpp"
 
 int main(int agrv, char *args[]) {
     if(SDL_Init(SDL_INIT_VIDEO) > 0) 
@@ -22,11 +23,26 @@ int main(int agrv, char *args[]) {
                            Entity(Vector2f(0,30), grass_texture),
                            Entity(Vector2f(30,30), grass_texture) };
 
+    const float timeStep = 0.01f;
+    float accumulator = 0.0f, currentTime = utils::hireTimeInSeconds();
+
     while(gameRunning) {
-        while(SDL_PollEvent(&event)) {
-            if(event.type == SDL_QUIT) {
-                gameRunning = false;
+
+        float newTime = utils::hireTimeInSeconds();
+        float frameTime = newTime - currentTime;
+
+        if(frameTime > 0.25f) 
+            frameTime = 0.25f;
+
+        currentTime = newTime;
+        accumulator += frameTime;
+
+        while(accumulator >= timeStep) {
+            while(SDL_PollEvent(&event)) {
+                if(event.type == SDL_QUIT)
+                    gameRunning = false;
             }
+            accumulator -= timeStep;
         }
 
         window.clear();
