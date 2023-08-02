@@ -5,6 +5,7 @@
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include "Utils.hpp"
+#include "Pong.hpp"
 
 int main(int argv, char *args[]) {
     if(SDL_Init(SDL_INIT_VIDEO) > 0) 
@@ -39,8 +40,13 @@ int main(int argv, char *args[]) {
 
         while(accumulator >= timeStep) {
             while(SDL_PollEvent(&event)) {
-                if(event.type == SDL_QUIT)
-                    gameRunning = false;
+                switch(event.type) {
+                    case SDL_QUIT:
+                        gameRunning = false;
+                        break;
+                    default: 
+                        break;
+                }
             }
             accumulator -= timeStep;
         }
