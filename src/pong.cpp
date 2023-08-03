@@ -25,41 +25,76 @@ void Paddle::shiftDown() {
     top += PADDLE_INCREMENT;
 }
 
-int Ball::contact(int left, int right, int bot, int top) { // -1 for no contact, 0 1 2 3 for left right bot top
-    if(top < bot) 
+int Ball::contact(int p_left, int p_right, int p_bot, int p_top) { // -1 for no contact, 0 1 2 3 for left right bot top
+    if(p_top > p_bot) 
         std::cout << "WARNING: Ball::contact() Y COORDINATE IS SUCH THAT TOP < BOTTOM" << std::endl;
             
-    float hori = 0;
-    if(pos.x < left)
-        hori = left - pos.x;
-    else if(pos.x > right) 
-        hori = pos.x - right;
+    if(left > p_right || right < p_left || top > p_bot || bot < p_top) return -1;
 
-    float vert = 0; // 2d array format (top < bot)
-    if(pos.y < top)
-        vert = top - pos.y;
-    else if(pos.y > bot) 
-        vert = pos.y - bot;
-
-    float dist = hori*hori + vert*vert;
-    
-    if(dist <= radius*radius) return -1;
-    if(pos.x <= left) return 0;
-    if(pos.x >= right) return 1;
-    if(pos.y >= bot) return 2;
+    int centre_x = (left+right) / 2, centre_y = (top+bot) / 2;
+    if(centre_x <= p_left) return 0;
+    if(centre_x >= p_right) return 1;
+    if(centre_y >= p_bot) return 2;
     return 3;
 }
 void Ball::bounceHori() {
+    float temp = velocity.x*BOUNCE_INCREMENT*velocity.x*BOUNCE_INCREMENT + velocity.y*BOUNCE_INCREMENT*velocity.y*BOUNCE_INCREMENT;
+    if(temp >= 144.0f) {
+        velocity.x = -velocity.x;
+        return;
+    }
+
     velocity.x *= -BOUNCE_INCREMENT;
     velocity.y *= BOUNCE_INCREMENT;
 }
 void Ball::bounceVert() {
+    float temp = velocity.x*BOUNCE_INCREMENT*velocity.x*BOUNCE_INCREMENT + velocity.y*BOUNCE_INCREMENT*velocity.y*BOUNCE_INCREMENT;
+    if(temp >= 400.0f) {
+        velocity.y = -velocity.y;
+        return;
+    }
+
     velocity.x *= BOUNCE_INCREMENT;
     velocity.y *= -BOUNCE_INCREMENT;
 }
 void Ball::updatePos() {
-    pos.x += velocity.x;
-    pos.y += velocity.y;
+    left += velocity.x; 
+    right += velocity.x;
+    top += velocity.y;
+    bot += velocity.y;
+
+    if(left <= 0) {
+        right -= left;
+        left = 0;
+    }
+
+    if(top <= 0) {
+        bot -= top;
+        top = 0;
+    }
+
+    if(right >= WINDOW_W) {
+        left = WINDOW_W-1 - (right-left);
+        right = WINDOW_W-1;
+    }
+
+    if(bot >= WINDOW_H) {
+        top = WINDOW_H-1 - (bot-top);
+        bot = WINDOW_H-1;
+    }
+
+    float temp = velocity.x*TIME_DECREMENT*velocity.x*TIME_DECREMENT + velocity.y*TIME_DECREMENT*velocity.y*TIME_DECREMENT;
+    if(temp <= 64.0f) 
+        return;
+
     velocity.x *= TIME_DECREMENT;
     velocity.y *= TIME_DECREMENT;
+}
+
+float Ball::getX() {
+    return (left + right) / 2;
+}
+
+float Ball::getY() {
+    return (top + bot) / 2;
 }

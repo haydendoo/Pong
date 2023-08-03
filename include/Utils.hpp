@@ -5,8 +5,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#define BOUNCE_INCREMENT 1.3f
-#define TIME_DECREMENT 0.95f
+#define BOUNCE_INCREMENT 1.25f
+#define TIME_DECREMENT 0.999f
 #define PADDLE_INCREMENT 5
 
 #define WINDOW_W 1280
