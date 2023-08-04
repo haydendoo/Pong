@@ -38,22 +38,10 @@ int Ball::contact(int p_left, int p_right, int p_bot, int p_top) { // -1 for no 
     return 3;
 }
 void Ball::bounceHori() {
-    float temp = velocity.x*BOUNCE_INCREMENT*velocity.x*BOUNCE_INCREMENT + velocity.y*BOUNCE_INCREMENT*velocity.y*BOUNCE_INCREMENT;
-    if(temp >= 144.0f) {
-        velocity.x = -velocity.x;
-        return;
-    }
-
     velocity.x *= -BOUNCE_INCREMENT;
     velocity.y *= BOUNCE_INCREMENT;
 }
 void Ball::bounceVert() {
-    float temp = velocity.x*BOUNCE_INCREMENT*velocity.x*BOUNCE_INCREMENT + velocity.y*BOUNCE_INCREMENT*velocity.y*BOUNCE_INCREMENT;
-    if(temp >= 400.0f) {
-        velocity.y = -velocity.y;
-        return;
-    }
-
     velocity.x *= BOUNCE_INCREMENT;
     velocity.y *= -BOUNCE_INCREMENT;
 }
@@ -82,13 +70,6 @@ void Ball::updatePos() {
         top = WINDOW_H-1 - (bot-top);
         bot = WINDOW_H-1;
     }
-
-    float temp = velocity.x*TIME_DECREMENT*velocity.x*TIME_DECREMENT + velocity.y*TIME_DECREMENT*velocity.y*TIME_DECREMENT;
-    if(temp <= 64.0f) 
-        return;
-
-    velocity.x *= TIME_DECREMENT;
-    velocity.y *= TIME_DECREMENT;
 }
 
 float Ball::getX() {
