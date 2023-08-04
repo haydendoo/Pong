@@ -14,6 +14,8 @@ public:
     void clear();
     void render(Entity &p_entity);
     void display();
+    void drawLine(int x1, int y1, int x2, int y2);
+    SDL_Renderer* _renderer();
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;

@@ -52,3 +52,13 @@ void RenderWindow::render(Entity &p_entity) {
 void RenderWindow::display() {
     SDL_RenderPresent(renderer);
 }
+
+void RenderWindow::drawLine(int x1, int y1, int x2, int y2) {
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+}
+
+SDL_Renderer* RenderWindow::_renderer() {
+    return renderer;
+}

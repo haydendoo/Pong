@@ -25,6 +25,21 @@ void Paddle::shiftDown() {
     top += PADDLE_INCREMENT;
 }
 
+void Paddle::reset() {
+    left = s_left;
+    right = s_right;
+    bot = s_bot;
+    top = s_top;
+}
+
+float Paddle::getX() {
+    return left;
+}
+
+float Paddle::getY() {
+    return top;
+}
+
 int Ball::contact(int p_left, int p_right, int p_bot, int p_top) { // -1 for no contact, 0 1 2 3 for left right bot top
     if(p_top > p_bot) 
         std::cout << "WARNING: Ball::contact() Y COORDINATE IS SUCH THAT TOP < BOTTOM" << std::endl;
@@ -78,4 +93,19 @@ float Ball::getX() {
 
 float Ball::getY() {
     return (top + bot) / 2;
+}
+
+void Ball::reset() {
+    velocity.x = utils::randf(8.0, 9.0);
+    velocity.y = 11.0f / velocity.x;
+    if(utils::randint(0,1) == 0) 
+        velocity.x = -velocity.x;
+
+    if(utils::randint(0,1) == 0) 
+        velocity.y = -velocity.y;
+
+    left = s_left;
+    right = s_right;
+    bot = s_bot;
+    top = s_top;
 }
